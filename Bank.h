@@ -11,7 +11,7 @@ class Bank
 private:
 	struct node
 	{
-		BankAccount data;
+		BankAccount *data;
 		node* prev;
 		node* next;
 	};
@@ -29,10 +29,12 @@ private:
 public:
 	Bank();
 	Bank(string, string, string);
-	bool addAccount(BankAccount);
+	bool addAccount(BankAccount*);
 	void delAccount(string accNum);
 	void traverse();
 	int getTotalBankAccounts();
+	int getTotalNumSavingAccounts();
+	int getTotalNumCheckingAccounts();
 	void displayEligibleServices();
 	void printInfo();
 	void printBriefInfo();

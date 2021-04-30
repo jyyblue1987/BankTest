@@ -16,7 +16,7 @@ Bank::Bank(string n, string a, string wh)
 	workingHours = wh;
 }
 
-bool Bank::addAccount(BankAccount ba)
+bool Bank::addAccount(BankAccount *ba)
 {
 	node* temp;
 	temp = new node();
@@ -41,7 +41,7 @@ void Bank::delAccount(string accNum)
 	while (n != NULL)
 	{
 		//cout << temp->data << endl;
-		if (n->data.getAccNumber() == accNum)
+		if (n->data->getAccNumber() == accNum)
 			break;
 		n = n->next;
 	}
@@ -61,6 +61,8 @@ void Bank::delAccount(string accNum)
 		n->prev->next = n->next;
 		n->next->prev = n->prev;
 	}
+
+	delete n->data;
 	delete(n);
 }
 
@@ -71,7 +73,7 @@ void Bank::traverse()
 	while (temp != NULL)
 	{
 		//cout << temp->data << endl;
-		temp->data.PrintInfo();
+		temp->data->PrintInfo();
 		temp = temp->next;
 	}
 }
@@ -88,7 +90,7 @@ void Bank::sortedInsert(node** head_ref, node* newNode)
 
 	// if the node is to be inserted at the beginning
 	// of the doubly linked list
-	else if ((*head_ref)->data.getAggBalance() >= newNode->data.getAggBalance()) {
+	else if ((*head_ref)->data->getAggBalance() >= newNode->data->getAggBalance()) {
 		newNode->next = *head_ref;
 		newNode->next->prev = newNode;
 		*head_ref = newNode;
@@ -100,7 +102,7 @@ void Bank::sortedInsert(node** head_ref, node* newNode)
 		// locate the node after which the new node
 		// is to be inserted
 		while (current->next != NULL &&
-			current->next->data.getAggBalance() < newNode->data.getAggBalance())
+			current->next->data->getAggBalance() < newNode->data->getAggBalance())
 			current = current->next;
 
 		/*Make the appropriate links */
@@ -156,8 +158,8 @@ void Bank::modify()
 	temp = front;
 	while (temp != NULL)
 	{
-		if (temp->data.getAccNumber() == acc)
-			temp->data.displayEligibleServices();
+		if (temp->data->getAccNumber() == acc)
+			temp->data->displayEligibleServices();
 		temp = temp->next;
 	}
 }
@@ -169,7 +171,36 @@ int Bank::getTotalBankAccounts()
 	temp = front;
 	while (temp != NULL)
 	{
-		c += temp->data.getNumSavingAccounts() + temp->data.getNumCheckingAccounts();
+		c++;
+		temp = temp->next;
+	}
+	return c;
+}
+
+int Bank::getTotalNumSavingAccounts()
+{
+	int c = 0;
+	node* temp;
+	temp = front;
+	while (temp != NULL)
+	{
+		c += temp->data->getNumSavingAccounts();
+
+		temp = temp->next;
+	}
+	return c;
+}
+
+
+int Bank::getTotalNumCheckingAccounts()
+{
+	int c = 0;
+	node* temp;
+	temp = front;
+	while (temp != NULL)
+	{
+		c += temp->data->getNumCheckingAccounts();
+
 		temp = temp->next;
 	}
 	return c;
@@ -203,10 +234,10 @@ void Bank::displayEligibleServices()
 			cout << setw(5) << " " << "| Number of bank accounts: " << getTotalBankAccounts() << endl;
 			break;
 		case 'S':
-			cout << setw(5) << " " << "| Number of Saving-accounts: " << BankAccount::getNumSavingAccounts() << endl;
+			cout << setw(5) << " " << "| Number of Saving-accounts: " << getTotalNumSavingAccounts() << endl;
 			break;
 		case 'H':
-			cout << setw(5) << " " << "| Number of Checking-accounts: " << BankAccount::getNumCheckingAccounts() << endl;
+			cout << setw(5) << " " << "| Number of Checking-accounts: " << getTotalNumCheckingAccounts() << endl;
 			break;
 		case 'O':
 			cin.ignore();
@@ -218,10 +249,10 @@ void Bank::displayEligibleServices()
 			cout << setw(5) << " " << "Enter the SSN of the account holder: ";
 			getline(cin, ssn);
 			cout << endl;
-			newAccount = new BankAccount(fname, lname, ssn);
-			addAccount(*newAccount);
+			newAccount = new BankAccount(fname, lname, ssn);			
 			cout << setw(5) << " " << "| A new bank account " << newAccount->getAccNumber() << " was successfully created. " << endl;
 			newAccount->displayEligibleServices();
+			addAccount(newAccount);
 			break;
 		case 'C':
 			cout << endl << setw(5) << " " << " Enter the account number to be deleted: " << endl;
@@ -259,7 +290,7 @@ void Bank::printInfo()
 
 	while (temp != NULL)
 	{
-		totBal += temp->data.getAggBalance();
+		totBal += temp->data->getAggBalance();
 		temp = temp->next;
 	}
 
@@ -279,7 +310,7 @@ void Bank::printBriefInfo()
 
 	while (temp != NULL)
 	{
-		totBal += temp->data.getAggBalance();
+		totBal += temp->data->getAggBalance();
 		temp = temp->next;
 	}
 
@@ -289,7 +320,7 @@ void Bank::printBriefInfo()
 	while (temp != NULL)
 	{
 		//cout << temp->data << endl;
-		temp->data.PrintBriefInfo();
+		temp->data->PrintBriefInfo();
 		temp = temp->next;
 	}
 }

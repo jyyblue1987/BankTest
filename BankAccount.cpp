@@ -3,17 +3,15 @@
 #include"CheckingSubAccount.h"
 
 int BankAccount::AccountNumberStart = 9999;
-int BankAccount::numSavingSubAccounts = 0;
-int BankAccount::numCheckingSubAccounts = 0;
 
 int BankAccount::getNumSavingAccounts()
 {
-	return numSavingSubAccounts;
+	return savingSubAccounts.size();
 }
 
 int BankAccount::getNumCheckingAccounts()
 {
-	return numCheckingSubAccounts;
+	return checkingSubAccounts.size();
 }
 
 BankAccount::BankAccount(string fn, string ln, string ssn)
@@ -25,15 +23,15 @@ BankAccount::BankAccount(string fn, string ln, string ssn)
 	accNumber = "BNK" + to_string(AccountNumberStart);
 }
 
+
 void BankAccount::OpenSavingSubAccount()
 {
 	double initBal;
 	cout << setw(5) << " " << "Enter the initial balance: ";
 	cin >> initBal;
-	numSavingSubAccounts++;
 
 	SavingSubAccount newSavingAccnt(initBal);
-	if (numSavingSubAccounts == 1)
+	if (savingSubAccounts.size() == 0)
 		newSavingAccnt.setSavingBalance(initBal + 100);//for bonus;
 	savingSubAccounts.push_back(newSavingAccnt);
 	savingObj.setSavingBalance(initBal);
@@ -58,8 +56,7 @@ void BankAccount::OpenCheckingSubAccount()
 		putLock = false;
 	CheckingSubAccount newCheckingAccnt(initBal, maxCapacity, putLock);
 	checkingSubAccounts.push_back(newCheckingAccnt);
-	checkingObj.setCheckingBalance(initBal);
-	numCheckingSubAccounts++;
+	checkingObj.setCheckingBalance(initBal);	
 }
 
 

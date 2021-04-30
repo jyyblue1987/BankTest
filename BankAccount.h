@@ -27,16 +27,14 @@ protected:
 public:
 	static int AccountNumberStart;
 	static int totalBankAccounts;
-	static int numSavingSubAccounts;
-	static int numCheckingSubAccounts;
-
+	
 	BankAccount()
 	{
 
 	}
 
-	static int getNumSavingAccounts();
-	static int getNumCheckingAccounts();
+	int getNumSavingAccounts();
+	int getNumCheckingAccounts();
 
 	BankAccount(string, string, string);
 	void OpenSavingSubAccount();
