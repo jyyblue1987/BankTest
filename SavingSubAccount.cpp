@@ -87,6 +87,7 @@ double SavingSubAccount::getBonus()
 
 void SavingSubAccount::printSavingAccInfo()
 {
+	cout << endl;
 	cout << setw(5) << " " << "| Sub-Account number: " << savingSubAccNum << endl;
 	cout << setw(5) << " " << "| Balance: " << getSavingBalance() << endl;
 }

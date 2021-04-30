@@ -69,13 +69,15 @@ double CheckingSubAccount::getBalance()
 
 void CheckingSubAccount::printCheckingAccInfo()
 {
+	cout << endl;
+
 	cout << setw(5) << " " << "| Sub-Account number: " << "CHK" + to_string(chkAccountNumStart) << endl;
-	cout << setw(5) << " " << "| Balance: " << getCheckingBalance() << endl << endl;
+	cout << setw(5) << " " << "| Balance: " << getCheckingBalance() << endl << endl << endl;
 	cout << setw(5) << " " << "| The maximum capacity is: " << getMaxCapacity() << endl;
 	if (isLocked)
 		cout << setw(5) << " " << "| The sub-account is locked." << endl;
 	else
-		cout << setw(5) << " " << "| The sub-account is unlocked." << endl;
+		cout << setw(5) << " " << "| The sub-account is not locked." << endl;
 }
 
 void CheckingSubAccount::checkingSubAccMenu()

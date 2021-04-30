@@ -63,9 +63,12 @@ void BankAccount::OpenCheckingSubAccount()
 
 void BankAccount::PrintInfo()
 {
+	cout << endl;
+	cout << setw(5) << " " << "| Bank Acount Number: " << accNumber << endl;
 	cout << setw(5) << " " << "| Account Holder Full Name: " << custFirstName << " " << custLastName << endl;
 	cout << setw(5) << " " << "| Account Holder SSN: " << SSN << endl;
 	cout << setw(5) << " " << "| Bank Account number: " << accNumber << endl;
+	
 	for (int i = 0; i < savingSubAccounts.size(); i++)
 		savingSubAccounts[i].printSavingAccInfo();
 	for (int i = 0; i < checkingSubAccounts.size(); i++)
